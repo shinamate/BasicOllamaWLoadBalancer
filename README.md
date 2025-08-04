@@ -1,5 +1,11 @@
 # Basic Ollama with Network Load Balancer
-The repository is a basic introduction to setup a Ollama server with network load balancer. All components are containerized.
+The repository is a basic introduction to setup a local Ollama server with network load balancer. All components are containerized.
+
+The user id is assumed to be 1000 in group 1000. You can get user id and group id by following commands.
+```
+id -u
+id -g
+```
 
 ## Install Prerequisites (Need SUDO Permission)
 > Tested on Debian-Bookworm
