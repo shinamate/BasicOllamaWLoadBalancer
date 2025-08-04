@@ -1,0 +1,76 @@
+#!/bin/bash
+PORT=15330
+docker run -it --rm --name ollama_server_large_01 --hostname ollama_server_large_01 --gpus all -u 1000:1000 -e "OLLAMA_HOST=172.18.0.5:$PORT" -e "OLLAMA_MODELS=/workspace/model_ollama_large" -e "OLLAMA_NUM_PARALLEL=1" -e "OLLAMA_MAX_LOADED_MODELS=1" -m 60G --shm-size 60G -v /home/$(id -u)/Documents/ollama_server_mounted:/workspace --net ollama_server_br ollama_server:base bash
+
+tmux new-session -d -s ollama_server_large
+echo "docker start ollama_server_large_01" > run.sh
+chmod u+x ./run.sh
+tmux new-window -t ollama_server_large:1
+tmux send-keys -t ollama_server_large:1 ./run.sh Enter
+
+sleep 5s
+
+echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama serve"' > ./run.sh
+chmod u+x ./run.sh
+tmux new-window -t ollama_server_large:2
+tmux send-keys -t ollama_server_large:2 ./run.sh Enter
+sleep 5s
+
+echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama run qwen3:30b-a3b-fp16 --keepalive=1m"' > ./run.sh
+chmod u+x ./run.sh
+tmux new-window -t ollama_server_large:3
+tmux send-keys -t ollama_server_large:3 ./run.sh Enter
+sleep 1m
+
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama run phi4-reasoning:14b --keepalive=1m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux new-window -t ollama_server_large:4
+#tmux send-keys -t ollama_server_large:4 ./run.sh Enter
+#sleep 1m
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama run devstral:24b --keepalive=1m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux new-window -t ollama_server_large:5
+#tmux send-keys -t ollama_server_large:5 ./run.sh Enter
+#sleep 1m
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama run qwen3-coder:30b --keepalive=1m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux new-window -t ollama_server_large:6
+#tmux send-keys -t ollama_server_large:6 ./run.sh Enter
+#sleep 1m
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama run nemotron:70b-instruct-q2_k --keepalive=1m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux new-window -t ollama_server_large:7
+#tmux send-keys -t ollama_server_large:7 ./run.sh Enter
+#sleep 1m
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama run deepseek-r1:32b --keepalive=1m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux new-window -t ollama_server_large:8
+#tmux send-keys -t ollama_server_large:8 ./run.sh Enter
+#sleep 1m
+
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama pull bge-m3:567m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux send-keys -t ollama_server_large:1 ./run.sh Enter
+#sleep 1s
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama pull bge-large:335m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux send-keys -t ollama_server_large:1 ./run.sh Enter
+#sleep 1s
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama pull nomic-embed-text"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux send-keys -t ollama_server_large:1 ./run.sh Enter
+#sleep 1s
+#
+#echo 'docker exec -it -u 1000:1000 ollama_server_large_01 bash -ic "ollama pull snowflake-arctic-embed2:568m"' > ./run.sh
+#chmod u+x ./run.sh
+#tmux send-keys -t ollama_server_large:1 ./run.sh Enter
+#sleep 1s
+
+
+rm ./run.sh
