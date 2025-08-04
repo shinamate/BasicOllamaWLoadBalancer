@@ -137,7 +137,7 @@ Suppose the default port configuration is used.
 
 You can get all models that stored in the container's OLLAMA environment.
 ```
-$ curl -k https://[ollamahost ip address]:51/api/tags
+$ curl -k https://[ollama host ip address]:51/api/tags
 $ curl -k https://[ollama host ip address]:81/api/tags
 $ curl -k https://[ollama host ip address]:91/api/tags
 ```
