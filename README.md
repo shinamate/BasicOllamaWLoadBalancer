@@ -27,7 +27,7 @@ Install/Update Host Device Nvidia Driver
 sudo apt-get install -y cuda-drivers
 ```
 
-### Install Nvidia Docker
+### Install Nvidia Docker Toolkit
  Follow [https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html]
 ```
 $ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
