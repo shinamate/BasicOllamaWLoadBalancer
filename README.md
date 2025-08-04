@@ -10,7 +10,7 @@ Follow [https://docs.docker.com/engine/install/]
 $ sudo usermod -aG docker $(id -un)
 ```
 
-### Install Nvidia Driver
+### Install CUDA and Nvidia Driver
 Follow
 [https://developer.nvidia.com/cuda-12-9-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_local]
 
