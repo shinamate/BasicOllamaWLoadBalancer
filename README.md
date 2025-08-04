@@ -10,7 +10,24 @@ Follow [https://docs.docker.com/engine/install/]
 $ sudo usermod -aG docker $(id -un)
 ```
 
-### Install Nvidia Docker
+### Install CUDA and Nvidia Driver
+Follow
+[https://developer.nvidia.com/cuda-12-9-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_local]
+
+```
+$ wget https://developer.download.nvidia.com/compute/cuda/12.9.0/local_installers/cuda-repo-debian12-12-9-local_12.9.0-575.51.03-1_amd64.deb
+$ sudo dpkg -i cuda-repo-debian12-12-9-local_12.9.0-575.51.03-1_amd64.deb
+$ sudo cp /var/cuda-repo-debian12-12-9-local/cuda-*-keyring.gpg /usr/share/keyrings/
+$ sudo apt-get update
+$ sudo apt-get -y install cuda-toolkit-12-9
+```
+
+Install/Update Host Device Nvidia Driver
+```
+sudo apt-get install -y cuda-drivers
+```
+
+### Install Nvidia Docker Toolkit
  Follow [https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html]
 ```
 $ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
@@ -110,4 +127,17 @@ You can mount Ext4 partitions for storing the Model weights.
 ```
 $ sudo mount /dev/nvme1n1p1 /home/$(id -un)/Documents/ollama_server_mounted
 $ sudo chown -R 1000:1000 /home/$(id -un)/Documents/ollama_server_mounted
+```
+#### API Verification
+Suppose the default port configuration is used.
+- Embedding's API port: 41 (https, load balanced)
+- Large model (#param>11b) API port: 51 (https)
+- Medium model (11b>#param>3b) API port: 81 (https)
+- Small model (#param<3b) API port: 91 (https)
+
+You can get all models that stored in the container's OLLAMA environment.
+```
+$ curl -k https://[ollamahost ip address]:51/api/tags
+$ curl -k https://[ollama host ip address]:81/api/tags
+$ curl -k https://[ollama host ip address]:91/api/tags
 ```
