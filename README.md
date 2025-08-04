@@ -3,8 +3,8 @@ The repository is a basic introduction to setup a local Ollama server with netwo
 
 The user id is assumed to be 1000 in group 1000. You can get user id and group id by following commands.
 ```
-id -u
-id -g
+$ id -u
+$ id -g
 ```
 
 ## Install Prerequisites (Need SUDO Permission)
