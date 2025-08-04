@@ -1,0 +1,55 @@
+cd haproxy 
+rm -rf ./serve
+rm -rf ./private
+rm -rf ./cert
+
+CURRENTIP=localhost
+
+function sslRedo()
+{
+FOLDER=$1
+mkdir -p $FOLDER
+mkdir -p ./private/$FOLDER
+mkdir -p ./cert/$FOLDER
+openssl req -x509 -newkey rsa:2048 -keyout ./private/$FOLDER/private.pem -out ./cert/$FOLDER/cert.pem -days 30 -nodes -subj "/CN=$CURRENTIP"
+cat ./private/$FOLDER/private.pem ./cert/$FOLDER/cert.pem > $FOLDER/common.pem
+}
+
+sslRedo ./serve/large
+sslRedo ./serve/medium
+sslRedo ./serve/small
+sslRedo ./serve/embedding
+
+docker network create --driver=bridge --subnet 172.18.0.0/24 ollama_server_br
+echo "docker run -it \
+   --rm \
+   --name ollama_server_ha \
+   --net ollama_server_br \
+   -v $(pwd):/usr/local/etc/haproxy:ro \
+   -v $(pwd)/serve:/serve:ro \
+   -p 41:41 \
+   -p 51:51 \
+   -p 81:81 \
+   -p 91:91 \
+   -p 32561:32561 \
+   haproxytech/haproxy-alpine:2.4" >> run_ha.sh
+
+tmux new-session -d -s loadbalancer
+chmod u+x ./run_ha.sh
+tmux new-window -t loadbalancer:1
+tmux send-keys -t loadbalancer:1 ./run_ha.sh Enter
+
+cd ..
+
+docker built -t ollama_server:base .
+
+chmod u+x ./ollama_docker.small
+./ollama_docker.small
+sleep 5s
+
+chmod u+x ./ollama_docker.medium
+./ollama_docker.medium
+sleep 5s
+
+chmod u+x ./ollama_docker.large
+./ollama_docker.large
