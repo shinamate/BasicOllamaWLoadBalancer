@@ -95,8 +95,8 @@ The configurations of Tmux sessions and Docker containers are in these bash scri
 
 If memory allocation issues occurs on a Ollama server, you can kill the Tmux session and stop the Docker container without interfering other API(s).
 ```
-tmux kill-session -t [session_name]
-docker stop [docker_name]
+$ tmux kill-session -t [session_name]
+$ docker stop [docker_name]
 ```
 
 #### If the file is not executable, add user's permission:
@@ -108,6 +108,6 @@ $ ./ActivateOllamaServer
 #### Model Storage (Require SUDO Permission)
 You can mount Ext4 partitions for storing the Model weights. 
 ```
-#sudo mount /dev/nvme1n1p1 /home/$(id -un)/Documents/ollama_server_mounted
-#sudo chown -R 1000:1000 /home/$(id -un)/Documents/ollama_server_mounted
+$ sudo mount /dev/nvme1n1p1 /home/$(id -un)/Documents/ollama_server_mounted
+$ sudo chown -R 1000:1000 /home/$(id -un)/Documents/ollama_server_mounted
 ```
