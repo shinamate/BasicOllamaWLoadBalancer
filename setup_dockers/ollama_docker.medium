@@ -1,6 +1,6 @@
 #!/bin/bash
 PORT=18330
-docker run -it --rm --name ollama_server_medium_01 --hostname ollama_server_medium_01 --gpus all -u 1000:1000 -e "OLLAMA_HOST=172.18.0.4:$PORT" -e "OLLAMA_MODELS=/workspace/model_ollama_medium" -e "OLLAMA_NUM_PARALLEL=3" -e "OLLAMA_MAX_LOADED_MODELS=2" -m 60G --shm-size 60G -v /home/$(id -un)/Documents/ollama_server_mounted:/workspace --net ollama_server_br ollama_server:base bash
+docker run -it --name ollama_server_medium_01 --hostname ollama_server_medium_01 --gpus all -u 1000:1000 -e "OLLAMA_HOST=172.18.0.4:$PORT" -e "OLLAMA_MODELS=/workspace/model_ollama_medium" -e "OLLAMA_NUM_PARALLEL=3" -e "OLLAMA_MAX_LOADED_MODELS=2" -m 60G --shm-size 60G -v /home/$(id -un)/Documents/ollama_server_mounted:/workspace --net ollama_server_br ollama_server:base bash
 
 tmux new-session -d -s ollama_server_medium
 echo "docker start ollama_server_medium_01" > run.sh
