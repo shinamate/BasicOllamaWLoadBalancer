@@ -39,6 +39,8 @@ chmod u+x ./run_ha.sh
 tmux new-window -t loadbalancer:1
 tmux send-keys -t loadbalancer:1 ./run_ha.sh Enter
 
+sleep 1s
+
 cd ..
 
 docker built -t ollama_server:base .
