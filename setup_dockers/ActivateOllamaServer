@@ -43,7 +43,7 @@ sleep 1s
 
 cd ..
 
-docker built -t ollama_server:base .
+docker build -t ollama_server:base .
 
 chmod u+x ./ollama_docker.small
 ./ollama_docker.small
