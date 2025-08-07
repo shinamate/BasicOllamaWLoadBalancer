@@ -17,7 +17,7 @@ $ sudo usermod -aG docker $(id -un)
 ```
 
 ### Install CUDA and Nvidia Driver
-Follow
+#### CUDA 12.9 Follow
 [https://developer.nvidia.com/cuda-12-9-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_local]
 
 ```
@@ -27,6 +27,18 @@ $ sudo cp /var/cuda-repo-debian12-12-9-local/cuda-*-keyring.gpg /usr/share/keyri
 $ sudo apt-get update
 $ sudo apt-get -y install cuda-toolkit-12-9
 ```
+
+#### CUDA 13.0 Follow
+[https://developer.nvidia.com/cuda-13-0-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_local]
+
+```
+$ wget https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda-repo-debian12-13-0-local_13.0.0-580.65.06-1_amd64.deb
+$ sudo dpkg -i cuda-repo-debian12-13-0-local_13.0.0-580.65.06-1_amd64.deb
+$ sudo cp /var/cuda-repo-debian12-13-0-local/cuda-*-keyring.gpg /usr/share/keyrings/
+$ sudo apt-get update
+$ sudo apt-get -y install cuda-toolkit-13-0
+```
+
 
 Install/Update Host Device Nvidia Driver
 ```
