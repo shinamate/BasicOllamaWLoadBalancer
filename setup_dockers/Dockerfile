@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.9.1-cudnn-runtime-ubuntu22.04
+FROM nvidia/cuda:13.0.0-cudnn-runtime-ubuntu24.04
 
 RUN apt update && apt install -y git curl wget libglib2.0-0 libgl1 gcc g++ cmake
 ENV VER_PARAM=v0.11.2
