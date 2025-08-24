@@ -1,5 +1,11 @@
 #!/bin/bash
 #LLAMA SERVER Script
 #suppose model is at /workspace/llamacpp/models
+#--ngl 8 mean it load 8 layers, which take ~3 GB of VRAM for GPT-OSS 20b MXFP4
 
-docker run --rm -it --no-healthcheck --name llamacpp --hostname llamacpp --gpus all -v /workspace/llamacpp/models:/models ghcr.io/ggml-org/llama.cpp:server-cuda-b6097 -m /models/gpt-oss-20b-mxfp4.gguf --port 31415 --host 172.17.0.2 --api-key "OPEN_API_KEY" -ngl 8
+docker run --rm -it --no-healthcheck \
+--name llamacpp --hostname llamacpp \
+--gpus all -v /workspace/llamacpp/models:/models ghcr.io/ggml-org/ \
+llama.cpp:server-cuda-b6097 -m /models/gpt-oss-20b-mxfp4.gguf \
+ --port 31415 --host 172.17.0.2 --api-key "OPEN_API_KEY" \
+ -ngl 8 --swa-full
